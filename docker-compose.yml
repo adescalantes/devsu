@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  client-service:
+    image: client-service
+    environment:
+      - HOST=host.docker.internal
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  account-service:
+    image: account-service
+    environment:
+      - HOST=host.docker.internal
+      - CLIENT_API_URL=http://client-service:8080
+    ports:
+      - "8081:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
